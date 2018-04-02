@@ -1,0 +1,13 @@
+  580  sudo apt-get purge -y docker.io docker-ce
+  582  sudo apt-get autoremove -y --purge docker.io docker-ce
+  583  sudo apt-get autoclean
+  584  sudo rm -rf /var/lib/docker
+  586  sudo rm /etc/apparmor.d/docker
+  588  sudo groupdel docker
+  589  sudo apt-get purge docker-ce
+  591  sudo rm -rf /var/lib/docker
+  593  sudo apt-get autoclean
+  602  sudo apt-get install -y docker-ce=17.12.1~ce-0~ubuntu docker.io
+  603  sudo apt-get install -y nvidia-docker2
+  666  docker run -it -p 8888:8888 -p 6006:6006 -v ~/:/host --name mask_coco waleedka/modern-deep-learning
+
