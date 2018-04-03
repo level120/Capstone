@@ -2,4 +2,6 @@
 *.a
 *.h5
 *.o
+*.zip
+*.weights
 darknet
