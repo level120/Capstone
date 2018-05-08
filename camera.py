@@ -4,6 +4,8 @@
 # 'rtsp-udp://210.119.85.77:1554/video1'
 # 'rtsp-multicast://210.119.85.77:1554/video1'
 
+#HTP-T2M20WXI
+
 import cv2
 import time
 rtsp_url = 'rtsp://210.119.85.77:1554/video1'
