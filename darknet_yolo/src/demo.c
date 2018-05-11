@@ -246,7 +246,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
             cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
         } else {
             cvMoveWindow("Demo", 0, 0);
-            cvResizeWindow("Demo", 1352, 1013);
+//            cvResizeWindow("Demo", 1352, 1013);
         }
     }
 
