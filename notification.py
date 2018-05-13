@@ -56,4 +56,4 @@ def main(datas):
 
 # person count, accuracy
 if __name__ == "__main__":
-    main([sys.argv[1], sys.argv[2], strftime("%Y-%m-%d %I:%M:%S", localtime())])
+    main([sys.argv[1], sys.argv[2], strftime("%Y-%m-%d %H:%M:%S", localtime())])
