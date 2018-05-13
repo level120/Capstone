@@ -4,5 +4,7 @@
 *.o
 *.zip
 *.weights
+*.backup
 darknet53.conv.74
 darknet
+service-account.json
