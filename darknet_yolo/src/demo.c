@@ -241,11 +241,11 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     int count = 0;
     if(!prefix){
-        cvNamedWindow("Demo", CV_WINDOW_NORMAL); 
+        cvNamedWindow("Object Detecting...", CV_WINDOW_NORMAL); 
         if(fullscreen){
-            cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+            cvSetWindowProperty("Object Detecting...", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
         } else {
-            cvMoveWindow("Demo", 0, 0);
+            cvMoveWindow("Object Detecting...", 0, 0);
 //            cvResizeWindow("Demo", 1352, 1013);
         }
     }
