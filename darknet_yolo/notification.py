@@ -16,7 +16,7 @@ def main(datas):
     # This registration token comes from the client FCM SDKs.
     #registration_token = 'ANDROID_CLIENT_TOKEN'
     topic = 'capstone'
-    message_body = datas[2] + '   Person : ' + datas[0] + ', Accuracy : ' + datas[1]
+    message_body = datas[2] + '   Person : ' + datas[0] + ', Accuracy : ' + datas[1] + '%'
     message_title = 'Notification!'
     
     # See documentation on defining a message payload.
@@ -50,8 +50,9 @@ def main(datas):
     # Send a message to the device corresponding to the provided
     # registration token.
     response = messaging.send(message)
+    
     # Response is a message ID string.
-    print 'Successfully sent message:', response
+    #print 'Successfully sent message:', response
   
 
 # person count, accuracy

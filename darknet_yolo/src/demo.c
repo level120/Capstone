@@ -187,6 +187,22 @@ void *detect_loop(void *ptr)
     }
 }
 
+/*
+void *timer_noti_thread(void *dat) {
+    struct timespec s, g;
+    clock_gettime(CLOCK_MONOTONIC, &s);
+    g = s;
+    
+    system("cd .. && ./notification.py 1 2");
+    
+    while ((g.tv_sec - s.tv_sec) < 10) {
+        sleep(1);
+        clock_gettime(CLOCK_MONOTONIC, &g);
+    }
+    *(int*)dat = 1;
+}
+*/
+
 void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const char *filename, char **names, int classes, int delay, char *prefix, int avg_frames, float hier, int w, int h, int frames, int fullscreen)
 {
     //demo_frame = avg_frames;
@@ -201,6 +217,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     set_batch_network(net, 1);
     pthread_t detect_thread;
     pthread_t fetch_thread;
+//    pthread_t timer_noti_thread;
+//    int noti_status = 1;
 
     srand(2222222);
 
@@ -241,11 +259,11 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     int count = 0;
     if(!prefix){
-        cvNamedWindow("Object Detecting...", CV_WINDOW_NORMAL); 
+        cvNamedWindow("Demo", CV_WINDOW_NORMAL); 
         if(fullscreen){
-            cvSetWindowProperty("Object Detecting...", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+            cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
         } else {
-            cvMoveWindow("Object Detecting...", 0, 0);
+            cvMoveWindow("Demo", 0, 0);
 //            cvResizeWindow("Demo", 1352, 1013);
         }
     }
@@ -265,8 +283,21 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
             sprintf(name, "%s_%08d", prefix, count);
             save_image(buff[(buff_index + 1)%3], name);
         }
+        
+        /*
+        if (noti_status) {
+            pthread_mutex_lock(&timer_noti_thread);
+            noti_status = 0;
+            pthread_mutex_unlock(&timer_noti_thread);
+            
+            pthread_create(&timer_noti_thread, 0, timer_noti_thread, (void*)&noti_status);
+            pthread_join(timer_noti_thread, 0);
+        }
+        */
+        
         pthread_join(fetch_thread, 0);
         pthread_join(detect_thread, 0);
+        
         ++count;
     }
 }

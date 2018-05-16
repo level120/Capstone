@@ -4,7 +4,9 @@
 #include "cuda.h"
 #include <highgui.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -15,6 +17,8 @@
 #define class class__ 
 
 int windows = 0;
+int time_flag = 1;
+struct timespec s, g;
 
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} };
 
@@ -242,7 +246,12 @@ image **load_alphabet()
 
 void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
-    int i,j;
+    int i, j, cnt = 0, accuracy = 0;
+    
+    if (time_flag) {
+        clock_gettime(CLOCK_MONOTONIC, &s);
+        g = s;
+    }
 
     for(i = 0; i < num; ++i){
         char labelstr[4096] = {0};
@@ -255,6 +264,12 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 } else {
                     strcat(labelstr, ", ");
                     strcat(labelstr, names[j]);
+                }
+                if (strcmp(names[j], "person")) {
+                    ++cnt;
+                    if (accuracy < (dets[i].prob[j]*100)) {
+                        accuracy = dets[i].prob[j]*100;
+                    }
                 }
                 printf("%s: %.0f%%\n", names[j], dets[i].prob[j]*100);
             }
@@ -309,6 +324,19 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 free_image(resized_mask);
                 free_image(tmask);
             }
+        }
+    }
+    
+    if (cnt) {
+        clock_gettime(CLOCK_MONOTONIC, &g);
+        if ((g.tv_sec - s.tv_sec) > 300 || time_flag) {
+            char cmd[100] = "";
+            sprintf(cmd, "./notification.py %d %d %c", cnt, accuracy, 38);
+            
+            s = g;
+            time_flag = 0;
+            
+            system(cmd);
         }
     }
 }
