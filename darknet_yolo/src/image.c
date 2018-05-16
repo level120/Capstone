@@ -334,11 +334,13 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
             sprintf(cmd, "./notification.py %d %d %c", cnt, accuracy, 38);
             
             s = g;
-            time_flag = accuracy = 0;
+            time_flag = 0;
             
             system(cmd);
         }
     }
+    
+    accuracy = cnt = 0;
 }
 
 void transpose_image(image im)
