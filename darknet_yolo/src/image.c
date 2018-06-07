@@ -267,9 +267,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 }
                 if (strcmp(names[j], "person")) {
                     ++cnt;
-                    if (accuracy < (dets[i].prob[j]*100)) {
-                        accuracy = dets[i].prob[j]*100;
-                    }
+                    accuracy = dets[i].prob[j]*100;
                 }
                 printf("%s: %.0f%%\n", names[j], dets[i].prob[j]*100);
             }
@@ -327,9 +325,10 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
         }
     }
     
-    if (cnt) {
-        clock_gettime(CLOCK_MONOTONIC, &g);
-        if ((g.tv_sec - s.tv_sec) > 300 || time_flag) {
+    
+    clock_gettime(CLOCK_MONOTONIC, &g);
+    if ((g.tv_sec - s.tv_sec) > 3 || time_flag) {
+        if (cnt) {
             char cmd[100] = "";
             sprintf(cmd, "./notification.py %d %d %c", cnt, accuracy, 38);
             
