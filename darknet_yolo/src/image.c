@@ -327,7 +327,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
     
     
     clock_gettime(CLOCK_MONOTONIC, &g);
-    if ((g.tv_sec - s.tv_sec) > 3 || time_flag) {
+    if ((g.tv_sec - s.tv_sec) > 60 || time_flag) {
         if (cnt) {
             char cmd[100] = "";
             sprintf(cmd, "./notification.py %d %d %c", cnt, accuracy, 38);
