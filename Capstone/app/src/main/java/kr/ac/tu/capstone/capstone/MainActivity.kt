@@ -17,6 +17,10 @@ import kotlinx.android.synthetic.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val videoView by lazy { findViewById<VideoView>(R.id.videoView) }
+
+    private val btnCall1 by lazy { findViewById<Button>(R.id.button) }
+    private val btnCall2 by lazy { findViewById<Button>(R.id.button2) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,30 +28,22 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseMessaging.getInstance().subscribeToTopic("capstone")
 
-        //RTSP
-        var videoView = findViewById(R.id.videoView) as VideoView
-        var mc = MediaController(this)
-        var uri = Uri.parse("rtsp://210.119.85.78:554/video1")
+        /* RTSP, 시연장에서 다시 빌드하지 않도록 텍스트 박스 값 요망 */
+        val mc = MediaController(this)
+        val uri = Uri.parse("rtsp://210.119.85.78:554/video1")
         /*var uri = Uri.parse("rtsp://guest:1234@210.119.85.78:554/video1")*/
 
         videoView.setMediaController(mc)
         videoView.setVideoURI(uri)
         videoView.start()
 
-        //버튼
-        var btn1 = findViewById(R.id.button) as Button
-        var btn2 = findViewById(R.id.button2) as Button
-
-        btn1.setOnClickListener {
-            val intent = intent
-            intent.setAction(Intent.ACTION_DIAL)
-            intent.setData(Uri.parse("tel:051-112"))
+        /* 버튼, 1, 2 연락처 또한 사용자가 등록할 수 있도록 부탁(ex, 연락처 등록?) */
+        btnCall1.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:010-5232-9573"))
             startActivity(intent)
         }
-        btn2.setOnClickListener {
-            var intent = intent
-            intent.setAction(Intent.ACTION_DIAL)
-            intent.setData(Uri.parse("tel:010-2482-3056"))
+        btnCall2.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:010-2482-3056"))
             startActivity(intent)
         }
     }
