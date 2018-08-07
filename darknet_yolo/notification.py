@@ -43,7 +43,7 @@ def main(datas):
                 icon='',
             ),
         ),
-        topic=topic
+        topic=topic,
         #token=registration_token
     )
     
